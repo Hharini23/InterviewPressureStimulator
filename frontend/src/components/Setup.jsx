@@ -16,7 +16,7 @@ const Setup = ({ onStart }) => {
     setError('');
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/interview/start',
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/interview/start`,
         { role, difficulty },
         { timeout: 30000 } // 30s timeout for AI generation
       );
@@ -29,7 +29,7 @@ const Setup = ({ onStart }) => {
     } catch (err) {
       console.error('Start Interview Error:', err);
       if (err.code === 'ECONNREFUSED' || err.message.includes('Network')) {
-        setError('Cannot connect to server. Is the backend running on port 5000?');
+        setError('Cannot connect to server. Please check if the backend is running.');
       } else if (err.response?.data?.error) {
         setError(`Server error: ${err.response.data.error}`);
       } else if (err.response?.data?.message) {

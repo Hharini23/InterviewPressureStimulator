@@ -57,7 +57,7 @@ const InterviewRoom = ({ data, onFinish }) => {
     setResponses(updatedResponses);
 
     try {
-      await axios.post('http://localhost:5000/api/interview/answer', { interviewId: data._id, ...newResponse });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/interview/answer`, { interviewId: data._id, ...newResponse });
     } catch (e) { console.error('Sync failed'); }
 
     if (currentIdx < data.questions.length - 1) {
@@ -74,7 +74,7 @@ const InterviewRoom = ({ data, onFinish }) => {
   const finalizeSession = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/interview/feedback/${data._id}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/interview/feedback/${data._id}`);
       onFinish(response.data);
       navigate('/feedback');
     } catch (error) {
